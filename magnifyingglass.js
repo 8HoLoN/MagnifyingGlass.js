@@ -23,8 +23,12 @@
     }
 
     this.mediaReady(function(){
+      that.dimensionsInfos = that.getDimensionsInfos();
+      console.log(that.dimensionsInfos);
+      that.prepare();
+      that.dimensionsInfos = that.getDimensionsInfos();
+      console.log(that.dimensionsInfos);
       that.init(_args,_opts);
-
     });
 
   };
@@ -66,6 +70,40 @@
 
   };
 
+  MagnifyingGlass.prototype.prepare = function(_args,_opts){
+    var _wasPlaying = this.elRef.paused===false;
+
+    var containerDiv = document.createElement("div");
+    containerDiv.setAttribute('style','position:relative; display:inline-block; width:'+this.dimensionsInfos.displayedWidth+'px; height:'+this.dimensionsInfos.displayedHeight+'px; display:block; border:0px dotted #33aa55; margin:0;padding:0;');
+    this.elRef.parentNode.insertBefore(containerDiv, this.elRef);
+    containerDiv.appendChild(this.elRef);
+    this.elRef.width = this.dimensionsInfos.displayedWidth;
+    this.elRef.height = this.dimensionsInfos.displayedHeight;
+    this.elRef.style.position = 'absolute';
+    if( _wasPlaying ){this.elRef.play();}
+
+    var mouseHandler = document.createElement("div");
+    mouseHandler.setAttribute('class','mouseHandler');
+    mouseHandler.setAttribute('id','mouseHandlerPicture');
+    mouseHandler.setAttribute('style','position:absolute; width:'+this.dimensionsInfos.displayedWidth+'px; height:'+this.dimensionsInfos.displayedHeight+'px; border:0px dotted #33aa55;');
+    mouseHandler.setAttribute('tabindex','0');
+    containerDiv.appendChild(mouseHandler);
+    this.mouseHandler = mouseHandler;
+  }
+
+  MagnifyingGlass.prototype.getDimensionsInfos = function(_args,_opts){
+    var displayedWidth = this.elRef.width;
+    var displayedHeight = this.elRef.height;
+    var naturalWidth = this.elRef.naturalWidth;
+    var naturalHeight = this.elRef.naturalHeight;
+    return {
+      displayedWidth:displayedWidth,
+      displayedHeight:displayedHeight,
+      naturalWidth:naturalWidth,
+      naturalHeight:naturalHeight
+    };
+  }
+
   MagnifyingGlass.prototype.init = function(_args,_opts){
     _args=_args||{};
     _opts=_opts||{};
@@ -100,7 +138,7 @@
     //this.canvas = $('#canvas');
     this.canvasContainer=_args.canvasContainer;
 
-    this.mouseHandler=_args.mouseHandler;
+    //this.mouseHandler=_args.mouseHandler;
 
 
     this.zoom=null;
