@@ -6,7 +6,6 @@ A library providing an usefull magnifying glass in JavaScript
 var magnifyingGlass = new MagnifyingGlass({
     'elRef':$('#img'),
     'canvasContainer':$('#canvasContainer'),
-    'mouseHandler':$('#mouseHandlerPicture'),
   });
 
 ## Extended Use
@@ -14,7 +13,6 @@ var magnifyingGlass = new MagnifyingGlass({
 var magnifyingGlass = new MagnifyingGlass({
     'elRef':$('#img'),
     'canvasContainer':$('#canvasContainer'),
-    'mouseHandler':$('#mouseHandlerPicture'),
   },{
     //'staticSource':true,
     'initialZoom':1,// 3.2
